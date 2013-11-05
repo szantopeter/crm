@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'jetty'
+apply plugin: 'maven'
+
+group = 'org.emarsys.crm'
+version = '0.1-SNAPSHOT'
+
+description = "CRM"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+        
+     maven { url "http://s3.amazonaws.com/maven.springframework.org/milestone" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'junit', name: 'junit', version:'4.7'
+    compile group: 'org.easymock', name: 'easymock', version:'2.3'
+    compile group: 'org.springframework', name: 'spring-test', version:'3.0.0.RC3'
+    compile group: 'org.springframework', name: 'spring-aop', version:'3.0.0.RC3'
+    compile group: 'org.springframework', name: 'spring-web', version:'3.0.0.RC3'
+    compile group: 'org.springframework', name: 'spring-webmvc', version:'3.0.0.RC3'
+    compile group: 'org.springframework', name: 'spring-jdbc', version:'3.0.0.RC3'
+    compile group: 'commons-dbcp', name: 'commons-dbcp', version:'1.2.2'
+    compile group: 'commons-io', name: 'commons-io', version:'1.4'
+    compile group: 'commons-collections', name: 'commons-collections', version:'3.2'
+    compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
+    compile group: 'org.freemarker', name: 'freemarker', version:'2.3.15'
+    compile group: 'org.springframework.webflow', name: 'spring-js', version:'2.0.7.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-taglibs', version:'2.0.4'
+    compile group: 'org.springframework.batch', name: 'spring-batch-core', version:'2.1.0.M3'
+    compile group: 'org.springframework.batch', name: 'spring-batch-infrastructure', version:'2.1.0.M3'
+    compile group: 'org.springframework.batch', name: 'spring-batch-admin-manager', version:'1.0.0.M1'
+    compile group: 'org.springframework.batch', name: 'spring-batch-admin-resources', version:'1.0.0.M1'
+    runtime group: 'hsqldb', name: 'hsqldb', version:'1.8.0.7'
+    runtime group: 'javax.servlet', name: 'jstl', version:'1.1.2'
+    runtime group: 'javax.servlet', name: 'servlet-api', version:'2.5'
+}
