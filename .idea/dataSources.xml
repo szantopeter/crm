@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3866732006">
+    <data-source source="LOCAL" name="MySQL - trunk@suite.ett.local" uuid="ed1cd47c-3f49-47c4-9959-deff0f2de1f7">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://suite.ett.local:3306/trunk</jdbc-url>
+      <user-name>rhelbuild</user-name>
+      <user-password>dfc6dfdddfc7dfdedfd8df98dfdfdf9e</user-password>
+      <default-dialect>mysql</default-dialect>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

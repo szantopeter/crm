@@ -38,4 +38,6 @@ dependencies {
     runtime group: 'hsqldb', name: 'hsqldb', version:'1.8.0.7'
     runtime group: 'javax.servlet', name: 'jstl', version:'1.1.2'
     runtime group: 'javax.servlet', name: 'servlet-api', version:'2.5'
+    runtime group: 'mysql', name: 'mysql-connector-java', version:'5.1.25'
+
 }

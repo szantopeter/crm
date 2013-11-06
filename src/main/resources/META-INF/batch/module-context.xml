@@ -6,9 +6,77 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<job id="job1" parent="simpleJob" xmlns="http://www.springframework.org/schema/batch" incrementer="incrementer">
-		<step id="j1.s1" parent="step1" />
-	</job>
+
+    <job id="exportJob" parent="simpleJob" xmlns="http://www.springframework.org/schema/batch" incrementer="incrementer">
+        <step id="export-job-generate-csv" parent="generateCsv" />
+    </job>
+
+    <bean id="generateCsv" parent="simpleStep">
+        <property name="itemReader" ref="dbItemReader" />
+        <property name="itemWriter" ref="cvsFileItemWriter" />
+    </bean>
+
+    <bean id="dbItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+        <property name="dataSource" ref="suiteDatasource" />
+        <!--
+<property name="queryProvider">
+        <bean class="org.spr...SqlPagingQueryProviderFactoryBean">
+            <property name="selectClause" value="select id, name, credit"/>
+            <property name="fromClause" value="from customer"/>
+            <property name="whereClause" value="where status=:status"/>
+            <property name="sortKey" value="id"/>
+        </bean>
+    </property>
+        -->
+        <property name="sql" value="
+SELECT _1 as first_name, _2 as last_name, _3 as email,
+  CASE _33
+    WHEN 1 THEN true
+    WHEN 2 THEN false
+    ELSE null
+  END as opt_in
+FROM 120401470_contact_0
+        " />
+        <property name="rowMapper">
+         <bean class="com.emarsys.crm.export.ContactRowMapper"/>
+        </property>
+    </bean>
+
+
+    <bean id="cvsFileItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
+        <!-- write to this csv file -->
+        <property name="resource" value="file:/tmp/contacts.csv" />
+        <property name="shouldDeleteIfExists" value="true" />
+
+        <property name="lineAggregator">
+            <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+                <property name="delimiter" value="," />
+                <property name="fieldExtractor">
+                    <bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+                        <property name="names" value="email, firstName, hello" />
+                    </bean>
+                </property>
+            </bean>
+        </property>
+
+        <property name="headerCallback">
+            <bean class="com.emarsys.crm.export.ContactCSVHeaderWriter"/>
+        </property>
+
+
+    </bean>
+
+    <bean id="suiteDatasource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://suite.ett.local:3306/trunk"/>
+        <property name="username" value="rhelbuild"/>
+        <property name="password" value="lwmtr2u4"/>
+        <property name="validationQuery" value="SELECT 1"/>
+    </bean>
+
+    <job id="job1" parent="simpleJob" xmlns="http://www.springframework.org/schema/batch" incrementer="incrementer">
+        <step id="j1.s1" parent="step1" />
+    </job>
 
 	<job id="job2" parent="simpleJob" xmlns="http://www.springframework.org/schema/batch">
 		<step id="j2.s1" parent="step1:master" />
